@@ -7,58 +7,49 @@
 # Purpose:    
 #############################################################################
 
-CC=gcc
-CFLAGS=-g -Wall
-VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all
-ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter -Ec --color -fCourier8
 
-# -g  include debug symbols in the executable so that the code can be
-# 		run through the debugger effectively
-#
-# -Wall	show all warnings from gcc
+ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter -Ecpp --color -fCourier8
+VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all 
 
-.PHONY: clean
-
-# TARGETS is used below to hold the name of all the executables
-# built by this Makefile.  This allows us to add the executable name
-# in one place and have both all and clean updated. 
-
-# Note that the list is spanning two lines.  The \ character indicates that
-# the list continues on the next line.  WARNING: There must be no characters
-# other than the newline after the \.  A blank space after the \ gives errors. 
-
-TARGETS=bin/main
-
-all: bin ${TARGETS}
-
-bin:
-	mkdir -p bin
-
-# Automatically generate rules
-# https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
-bin/%: bin/%.o
-	gcc -o $@ -g -Wall $^
-
-bin/%.o: src/%.c
-	gcc -c -o $@ -g -Wall $<
-
-
-# Custom rules
-# bin/helloworld: bin/helloworld.o 
-# 	${CC} ${CFLAGS} -o bin/functionPointers bin/functionPointers.o 
+#compiler=clang++
+compiler=gcc
 	
-# bin/helloworld.o: src/helloworld.c
-# 	${CC} ${CFLAGS} -o bin/helloworld.o -c src/helloworld.c
 
+TARGETS=bin/qdriver1 bin/qMemTest bin/queuedriver
+
+all: ${TARGETS}
+
+
+bin/qdriver1: bin/queue.o bin/qdriver1.o
+	gcc -o bin/qdriver1 -g -Wall bin/qdriver1.o bin/queue.o
+
+bin/qdriver1.o: src/qdriver1.c include/queue.h 
+	gcc -o bin/qdriver1.o src/qdriver1.c -c -g -Wall
+
+
+bin/queuedriver: bin/queue.o bin/queuedriver.o
+	gcc -o bin/queuedriver -g -Wall bin/queuedriver.o bin/queue.o
+
+bin/queuedriver.o: src/queuedriver.c include/queue.h 
+	gcc -o bin/queuedriver.o src/queuedriver.c -c -g -Wall
+
+bin/qMemTest: bin/queue.o bin/qMemTest.o 
+	gcc -o bin/qMemTest -g -Wall bin/qMemTest.o bin/queue.o
+
+bin/qMemTest.o: src/qMemTest.c include/queue.h
+	gcc -o bin/qMemTest.o src/qMemTest.c -c -g -Wall
+
+bin/queue.o: src/queue.c include/queue.h
+	gcc -o bin/queue.o src/queue.c -c -g -Wall
+
+valgrind1: bin/qdriver1
+	valgrind ${VALGRIND_FLAGS} bin/qdriver1
+
+valgrindMem: bin/qMemTest
+	valgrind ${VALGRIND_FLAGS} bin/qMemTest
+
+valgrindDriver: bin/queuedriver
+	valgrind ${VALGRIND_FLAGS} bin/queuedriver data/input.txt
+ 
 clean:
-	rm -rf bin/*.o ${TARGETS} bin/*.pdf
-
-printAll:
-	enscript ${ENSCRIPT_FLAGS} src/main.c  | ps2pdf - bin/main.pdf
-
-valgrind: bin/main
-	valgrind ${VALGRIND_FLAGS} bin/main
-
-# https://www.gnu.org/software/make/manual/html_node/Chained-Rules.html
-# https://www.gnu.org/software/make/manual/html_node/Special-Targets.html
-.PRECIOUS: bin/%.o
+	rm -rf ${TARGETS} bin/*.o bin/main.dSYM bin/*.pdf
