@@ -10,6 +10,26 @@
 #include "../include/queue.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+
+/**************************************************************************
+ Function: 	 	processError - DO NOT EDIT
+
+
+ Description: Print the filename and line number of an error
+
+ Parameters:	szFile - filename
+              line - the line number
+
+ Returned:	 	None
+ *************************************************************************/
+void processError(const char* szFile, const int line)
+{
+  fprintf(stderr, "ERROR: %s: %d\n", szFile, line);
+  fflush(NULL);
+  exit(EXIT_FAILURE);
+}
 
 /**************************************************************************
 *										Allocation and Deallocation

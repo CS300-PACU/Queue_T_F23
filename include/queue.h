@@ -16,6 +16,15 @@
 #include <stdbool.h>
 #include <stdlib.h> // size_t
 
+//*************************************************************************
+// Error reporting functions
+//*************************************************************************
+extern void processError(const char* szFile, const int line);
+// helper function to report errors
+
+// macro to report error
+#define reportError   processError(__FILE__, __LINE__)
+
 #define Q_SIZE  100000
 
 //*************************************************************************
