@@ -15,17 +15,9 @@ VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-
 compiler=gcc
 	
 
-TARGETS=bin/qdriver1 bin/qMemTest bin/queuedriver
+TARGETS=bin/queuedriver bin/queuetester
 
 all: ${TARGETS}
-
-
-bin/qdriver1: bin/queue.o bin/qdriver1.o
-	gcc -o bin/qdriver1 -g -Wall bin/qdriver1.o bin/queue.o
-
-bin/qdriver1.o: src/qdriver1.c include/queue.h 
-	gcc -o bin/qdriver1.o src/qdriver1.c -c -g -Wall
-
 
 bin/queuedriver: bin/queue.o bin/queuedriver.o
 	gcc -o bin/queuedriver -g -Wall bin/queuedriver.o bin/queue.o
@@ -33,23 +25,28 @@ bin/queuedriver: bin/queue.o bin/queuedriver.o
 bin/queuedriver.o: src/queuedriver.c include/queue.h 
 	gcc -o bin/queuedriver.o src/queuedriver.c -c -g -Wall
 
-bin/qMemTest: bin/queue.o bin/qMemTest.o 
-	gcc -o bin/qMemTest -g -Wall bin/qMemTest.o bin/queue.o
+bin/queuetester: bin/queue.o bin/queuetester.o 
+	gcc -o bin/queuetester -g -Wall bin/queuetester.o bin/queue.o
 
-bin/qMemTest.o: src/qMemTest.c include/queue.h
-	gcc -o bin/qMemTest.o src/qMemTest.c -c -g -Wall
+bin/queuetester.o: src/queuetester.c include/queue.h
+	gcc -o bin/queuetester.o src/queuetester.c -c -g -Wall
 
 bin/queue.o: src/queue.c include/queue.h
 	gcc -o bin/queue.o src/queue.c -c -g -Wall
 
-valgrind1: bin/qdriver1
-	valgrind ${VALGRIND_FLAGS} bin/qdriver1
 
-valgrindMem: bin/qMemTest
-	valgrind ${VALGRIND_FLAGS} bin/qMemTest
 
-valgrindDriver: bin/queuedriver
-	valgrind ${VALGRIND_FLAGS} bin/queuedriver data/input.txt
- 
+printAll:
+	enscript ${ENSCRIPT_FLAGS} -Emakefile  Makefile  | ps2pdf - bin/Makefile.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/queue.c  | ps2pdf - bin/queue.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/queuedriver.c  | ps2pdf - bin/queuedriver.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/queuetester.c  | ps2pdf - bin/queuetester.pdf
+	pdfunite bin/queue.pdf bin/queuedriver.pdf bin/queuetester.pdf bin/Makefile.pdf bin/${USER}_queue.pdf
+	@echo
+	@echo File produced: bin/${USER}_queue.pdf
+	@echo
+	@ls -l bin/${USER}_queue.pdf
+	@echo
+
 clean:
-	rm -rf ${TARGETS} bin/*.o bin/main.dSYM bin/*.pdf
+	rm -f ${TARGETS} bin/*.o bin/*.pdf
