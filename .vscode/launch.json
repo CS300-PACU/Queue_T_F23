@@ -5,15 +5,24 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(lldb) Launch", // Change name
+      "name": "(lldb) queuedriver", // Change name
       "type": "lldb",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/main", // THIS IS IMPORTANT
+      "program": "${workspaceFolder}/bin/queuedriver", // THIS IS IMPORTANT
       "args": [], // add comma separated list of args here.
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "runMake", // THIS IS IMPORTANT
     },
     {
+      "name": "(lldb) queuetester", // Change name
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/queuetester", // THIS IS IMPORTANT
+      "args": [], // add comma separated list of args here.
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "runMake", // THIS IS IMPORTANT
+    },
+/*    {
       "name": "(lldb) Launch with args", // Change name
       "type": "lldb",
       "request": "launch",
@@ -22,7 +31,7 @@
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "runMake", // THIS IS IMPORTANT
     },
-/*    {
+   {
       "name": "(gdb) Launch with args", // Change name
       "type": "cppdbg",
       "request": "launch",
