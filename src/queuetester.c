@@ -69,42 +69,44 @@ static void assert (bool bExpression, char* pTrue, char* pFalse) {
 
 int main () {
 	Queue sTheQ;
-	int dataValue;
+	int dataValue = -1;
 	int i;
 	const int MAX_ITEMS = 4;
-	int MAX_Q_SIZE = 6;
-
+	
 	puts ("Program Start\n");
 
 	queueCreate (&sTheQ, sizeof (int));
+
 	success ("Q Create");
-	queueDequeue (&sTheQ, &dataValue);
 
 	assert (queueCount (&sTheQ) == 0, "queueCount is 0",
 		"queueCount is not 0");
 
-	assert (queueIsEmpty (&sTheQ), "queueIsEmpty", "!queueIsEmpty");
+	// TODO: Validate that the queue is empty
+	
 
 
 	for (i = 0; i < MAX_ITEMS; ++i) {
 		queueEnqueue (&sTheQ, &i);
+
+		// TODO: Validate the Enqueue worked
+
+
 	}
 
-	assert (MAX_ITEMS == queueCount (&sTheQ), "queueCount is correct",
-		"queueCount is not correct");
+	// TODO: Validate that the queue contains MAX_ITEMS
 
 
 
-	for (i = 0; i < MAX_ITEMS; ++i) {
-		queueDequeue (&sTheQ, &dataValue);
+	queueDequeue(&sTheQ, &dataValue);
+	// TODO: Validate that dataValue contains the correct value
 
-		if (dataValue != i) {
-			assert (dataValue == i, "", "DataValue 0-3 error");
-		}
-	}
 
-	assert (queueCount (&sTheQ) == 0, "queueCount is 0",
-		"queueCount is not 0");
+
+
+	// TODO: Validate the remaining queue functions
+
+
 
 	queueTerminate (&sTheQ);
 	success ("Q Terminate");
