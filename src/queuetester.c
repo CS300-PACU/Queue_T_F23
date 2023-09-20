@@ -13,6 +13,14 @@
 #include <stdbool.h>
 #include <string.h>
 
+typedef struct TempRecord
+{
+	double temp;
+	int month;
+	int day;
+	int year;
+} TempRecord;
+
  /****************************************************************************
 	Function: 	 	success
 
@@ -75,7 +83,9 @@ int main () {
 	
 	puts ("Program Start\n");
 
+	// create a queue for ints
 	queueCreate (&sTheQ, sizeof (int));
+
 
 	success ("Q Create");
 
@@ -83,8 +93,11 @@ int main () {
 		"queueCount is not 0");
 
 	// TODO: Validate that the queue is empty
-	
 
+
+	
+	// TODO: create a separate queue for TempRecords
+	
 
 	for (i = 0; i < MAX_ITEMS; ++i) {
 		queueEnqueue (&sTheQ, &i);
