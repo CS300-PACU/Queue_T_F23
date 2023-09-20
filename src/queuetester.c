@@ -68,7 +68,7 @@ char *szFile, int line) {
 
 	char *pStr;
 	int fileAndLineLength;
-	const int SPACES = 5; // " - " ":" "\0"
+	const int SPACES = 5; // " - " ':' '\0'
 
 	fileAndLineLength = strlen(szFile) + (int) log(line);
 
