@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 typedef struct TempRecord
 {
@@ -34,7 +35,7 @@ typedef struct TempRecord
 	Returned:	 	none
 	****************************************************************************/
 static void success (char* szStr) {
-	printf ("SUCCESS: %s", szStr);
+	printf ("SUCCESS: %s\n", szStr);
 }
 
 /****************************************************************************
@@ -47,27 +48,41 @@ static void success (char* szStr) {
  Returned:	 	none
  ****************************************************************************/
 static void failure (char* szStr) {
-	printf ("FAILURE: %s", szStr);
+	printf ("FAILURE: %s\n", szStr);
 }
 
 /****************************************************************************
- Function: 	 	assert
+ Function: 	 	checkAssert
 
  Description: if the expression is true, assert success; otherwise, assert
 							failure
+							DO NOT CALL THIS FUNCTION DIRECTLY
+							use: assert(cond, trueMsg, falseMsg);
 
  Parameters:	szStr - the message to print
 
  Returned:	 	none
  ****************************************************************************/
-static void checkAssert (bool bExpression, char* pTrue, char* pFalse, char *szFile, int line) {
+static void checkAssert (bool bExpression, char* pTrue, char* pFalse, 
+char *szFile, int line) {
+
+	char *pStr;
+	int fileAndLineLength;
+	const int SPACES = 6; // " - " ":" "\n\0"
+
+	fileAndLineLength = strlen(szFile) + (int) log(line);
+
 	if (bExpression) {
-		success (pTrue);
+		pStr = malloc(strlen(pTrue) + fileAndLineLength + SPACES);
+		sprintf(pStr, "%s - %s:%d\n", pTrue, szFile, line);
+		success (pStr);
 	}
 	else {
-		failure (pFalse);
+		pStr = malloc(strlen(pFalse) + fileAndLineLength + SPACES);
+		sprintf(pStr, "%s - %s:%d\n", pFalse, szFile, line);
+		failure (pStr);
 	}
-	printf(" - %s:%d\n", szFile, line);
+	free(pStr);
 }
 
 /****************************************************************************
@@ -119,10 +134,7 @@ int main () {
 	// TODO: Validate that dataValue contains the correct value
 
 
-
-
 	// TODO: Validate the remaining queue functions
-
 
 
 	queueTerminate (&sTheQ);

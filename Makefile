@@ -19,7 +19,7 @@ TARGETS=bin/queuetester
 all: clean_objects ${TARGETS}
 
 bin/queuetester: bin/queue.o bin/queuetester.o 
-	gcc -o bin/queuetester -g -Wall bin/queuetester.o bin/queue.o
+	gcc -o bin/queuetester -g -Wall bin/queuetester.o bin/queue.o -lm
 
 bin/queuetester.o: src/queuetester.c include/queue.h
 	gcc -o bin/queuetester.o src/queuetester.c -c -g -Wall
@@ -27,6 +27,9 @@ bin/queuetester.o: src/queuetester.c include/queue.h
 bin/queue.o: src/queue.c include/queue.h
 	gcc -o bin/queue.o src/queue.c -c -g -Wall
 
+valgrind: bin/queuetester
+	valgrind ${VALGRIND_FLAGS} bin/queuetester
+	
 printAll:
 	enscript ${ENSCRIPT_FLAGS} -Emakefile  Makefile  | ps2pdf - bin/Makefile.pdf
 	enscript ${ENSCRIPT_FLAGS} -Ec src/queue.c  | ps2pdf - bin/queue.pdf
