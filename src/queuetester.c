@@ -21,6 +21,9 @@ typedef struct TempRecord
 	int year;
 } TempRecord;
 
+#define assert(cond, trueMsg, falseMsg)   checkAssert(cond, trueMsg, falseMsg, __FILE__, __LINE__)
+
+
  /****************************************************************************
 	Function: 	 	success
 
@@ -31,7 +34,7 @@ typedef struct TempRecord
 	Returned:	 	none
 	****************************************************************************/
 static void success (char* szStr) {
-	printf ("SUCCESS: %s\n", szStr);
+	printf ("SUCCESS: %s", szStr);
 }
 
 /****************************************************************************
@@ -44,7 +47,7 @@ static void success (char* szStr) {
  Returned:	 	none
  ****************************************************************************/
 static void failure (char* szStr) {
-	printf ("FAILURE: %s\n", szStr);
+	printf ("FAILURE: %s", szStr);
 }
 
 /****************************************************************************
@@ -57,13 +60,14 @@ static void failure (char* szStr) {
 
  Returned:	 	none
  ****************************************************************************/
-static void assert (bool bExpression, char* pTrue, char* pFalse) {
+static void checkAssert (bool bExpression, char* pTrue, char* pFalse, char *szFile, int line) {
 	if (bExpression) {
 		success (pTrue);
 	}
 	else {
 		failure (pFalse);
 	}
+	printf(" - %s:%d\n", szFile, line);
 }
 
 /****************************************************************************
