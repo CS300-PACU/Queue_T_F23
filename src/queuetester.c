@@ -68,18 +68,18 @@ char *szFile, int line) {
 
 	char *pStr;
 	int fileAndLineLength;
-	const int SPACES = 6; // " - " ":" "\n\0"
+	const int SPACES = 5; // " - " ":" "\0"
 
 	fileAndLineLength = strlen(szFile) + (int) log(line);
 
 	if (bExpression) {
 		pStr = malloc(strlen(pTrue) + fileAndLineLength + SPACES);
-		sprintf(pStr, "%s - %s:%d\n", pTrue, szFile, line);
+		sprintf(pStr, "%s - %s:%d", pTrue, szFile, line);
 		success (pStr);
 	}
 	else {
 		pStr = malloc(strlen(pFalse) + fileAndLineLength + SPACES);
-		sprintf(pStr, "%s - %s:%d\n", pFalse, szFile, line);
+		sprintf(pStr, "%s - %s:%d", pFalse, szFile, line);
 		failure (pStr);
 	}
 	free(pStr);
