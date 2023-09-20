@@ -22,7 +22,8 @@ typedef struct TempRecord
 	int year;
 } TempRecord;
 
-#define assert(cond, trueMsg, falseMsg)   checkAssert(cond, trueMsg, falseMsg, __FILE__, __LINE__)
+#define assert(cond, trueMsg, falseMsg) \
+checkAssert(cond, trueMsg, falseMsg, __FILE__, __LINE__)
 
 
  /****************************************************************************
