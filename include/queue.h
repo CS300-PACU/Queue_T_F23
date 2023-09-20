@@ -25,7 +25,7 @@ extern void processError(const char* szFile, const int line);
 // macro to report error
 #define reportError   processError(__FILE__, __LINE__)
 
-#define Q_SIZE  100000
+#define Q_SIZE  100
 
 //*************************************************************************
 // User-defined types
