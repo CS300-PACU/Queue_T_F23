@@ -105,11 +105,8 @@ int main () {
 	// create a queue for ints
 	queueCreate (&sTheQ, sizeof (int));
 
-
-	success ("Q Create");
-
-	assert (queueCount (&sTheQ) == 0, "queueCount is 0",
-		"queueCount is not 0");
+	assert (queueCount (&sTheQ) == 0, "after create queueCount is 0",
+		"after create queueCount is not 0");
 
 	// TODO: Validate that the queue is empty
 
@@ -138,7 +135,8 @@ int main () {
 
 
 	queueTerminate (&sTheQ);
-	success ("Q Terminate");
+	assert (queueCount (&sTheQ) == 0, "after terminate queueCount is 0",
+		"after terminate queueCount is not 0");
 
 	puts ("\nProgram End");
 
