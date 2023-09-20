@@ -27,7 +27,7 @@ bin/queuetester.o: src/queuetester.c include/queue.h
 bin/queue.o: src/queue.c include/queue.h
 	gcc -o bin/queue.o src/queue.c -c -g -Wall
 
-valgrind: bin/queuetester
+valgrind: all
 	valgrind ${VALGRIND_FLAGS} bin/queuetester
 	
 printAll:
