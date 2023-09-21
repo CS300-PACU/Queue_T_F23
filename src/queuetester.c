@@ -115,9 +115,6 @@ int main () {
 	// TODO: Validate that the queue is empty
 
 
-	
-	// TODO: create a separate queue for TempRecords
-	
 
 	for (i = 0; i < MAX_ITEMS; ++i) {
 		queueEnqueue (&sTheQ, &i);
@@ -141,6 +138,10 @@ int main () {
 	queueTerminate (&sTheQ);
 	assert (queueCount (&sTheQ) == 0, "after terminate queueCount is 0",
 		"after terminate queueCount is not 0");
+
+
+	// TODO: create a separate queue for TempRecords
+	// test all of the queue functions.
 
 	puts ("\nProgram End");
 
