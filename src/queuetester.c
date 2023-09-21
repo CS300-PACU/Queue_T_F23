@@ -14,9 +14,12 @@
 #include <string.h>
 #include <math.h>
 
+#define LOW 0
+#define HIGH 1
+
 typedef struct TempRecord
 {
-	double temp;
+	int aTemps[2]; // LOW, HIGH
 	int month;
 	int day;
 	int year;
