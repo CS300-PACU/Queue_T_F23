@@ -36,7 +36,7 @@ typedef struct Queue
 	void* apData[Q_SIZE +1];
 	int head; 								// remove
 	int tail; 								// add
-	size_t currNumbItems; 							// track how many items are in the queue
+	size_t currNumberOfItems; 							// track how many items are in the queue
 	size_t itemSize;					// track how much memory each item the queue needs
 } Queue;
 
