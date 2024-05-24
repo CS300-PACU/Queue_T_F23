@@ -8,24 +8,28 @@
 #############################################################################
 
 
-ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter -Ecpp --color -fCourier8
-VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all 
+# variables
+CC=clang
+CFLAGS=-g -Wall
+VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all
+ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter --color -fCourier8
 
-#compiler=clang++
-compiler=gcc
 	
 TARGETS=bin/queuetester
 
 all: clean_objects ${TARGETS}
 
-bin/queuetester: bin/queue.o bin/queuetester.o 
-	gcc -o bin/queuetester -g -Wall bin/queuetester.o bin/queue.o -lm
+bin/queuetester: bin/queue.o bin/queuetester.o bin/driverUtil.o
+	${CC} -o bin/queuetester ${CFLAGS} bin/queuetester.o bin/queue.o bin/driverUtil.o -lm
 
 bin/queuetester.o: src/queuetester.c include/queue.h
-	gcc -o bin/queuetester.o src/queuetester.c -c -g -Wall
+	${CC} -o bin/queuetester.o src/queuetester.c -c ${CFLAGS} 
 
 bin/queue.o: src/queue.c include/queue.h
-	gcc -o bin/queue.o src/queue.c -c -g -Wall
+	${CC} -o bin/queue.o src/queue.c -c ${CFLAGS} 
+
+bin/driverUtil.o: src/driverUtil.c include/driverUtil.h
+	${CC} ${CFLAGS} -c -o bin/driverUtil.o src/driverUtil.c 
 
 valgrind: all
 	valgrind ${VALGRIND_FLAGS} bin/queuetester

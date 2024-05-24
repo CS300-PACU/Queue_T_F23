@@ -8,6 +8,8 @@
  ****************************************************************************/
 
 #include "../include/queue.h"
+#include "../include/driverUtil.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -24,71 +26,6 @@ typedef struct TempRecord
 	int day;
 	int year;
 } TempRecord;
-
-#define assert(cond, trueMsg, falseMsg) \
-checkAssert(cond, trueMsg, falseMsg, __FILE__, __LINE__)
-
-
- /****************************************************************************
-	Function: 	 	success
-
-	Description: print a success message
-
-	Parameters:	szStr - the message to print
-
-	Returned:	 	none
-	****************************************************************************/
-static void success (char* szStr) {
-	printf ("SUCCESS: %s\n", szStr);
-}
-
-/****************************************************************************
- Function: 	 	failure
-
- Description: print a failure message
-
- Parameters:	szStr - the message to print
-
- Returned:	 	none
- ****************************************************************************/
-static void failure (char* szStr) {
-	printf ("FAILURE: %s\n", szStr);
-}
-
-/****************************************************************************
- Function: 	 	checkAssert
-
- Description: if the expression is true, assert success; otherwise, assert
-							failure
-							DO NOT CALL THIS FUNCTION DIRECTLY
-							use: assert(cond, trueMsg, falseMsg);
-
- Parameters:	szStr - the message to print
-
- Returned:	 	none
- ****************************************************************************/
-static void checkAssert (bool bExpression, char* pTrue, char* pFalse, 
-char *szFile, int line) {
-
-	char *pStr;
-	int fileAndLineLength;
-	const int SPACES = 5; // " - " ':' '\0'
-
-	fileAndLineLength = strlen(szFile) + (int) log(line);
-
-	if (bExpression) {
-		pStr = malloc(strlen(pTrue) + fileAndLineLength + SPACES);
-		sprintf(pStr, "%s - %s:%d", pTrue, szFile, line);
-		success (pStr);
-	}
-	else {
-		pStr = malloc(strlen(pFalse) + fileAndLineLength + SPACES);
-		sprintf(pStr, "%s - %s:%d", pFalse, szFile, line);
-		failure (pStr);
-	}
-	free(pStr);
-	fflush(NULL);
-}
 
 /****************************************************************************
  Function: 	 	main
@@ -110,8 +47,7 @@ int main () {
 	// create a queue for ints
 	queueCreate (&sTheQ, sizeof (int));
 
-	assert (queueCount (&sTheQ) == 0, "after create queueCount is 0",
-		"after create queueCount is not 0");
+	assert (queueCount (&sTheQ) == 0, "after create queueCount is 0");
 
 	// TODO: Validate that the queue is empty
 
@@ -137,8 +73,7 @@ int main () {
 
 
 	queueTerminate (&sTheQ);
-	assert (queueCount (&sTheQ) == 0, "after terminate queueCount is 0",
-		"after terminate queueCount is not 0");
+	assert (queueCount (&sTheQ) == 0, "after terminate queueCount is 0");
 
 
 	// TODO: create a separate queue for TempRecords
