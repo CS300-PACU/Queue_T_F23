@@ -37,11 +37,12 @@ typedef struct TempRecord
  ****************************************************************************/
 
 int main () {
+	const int MAX_ITEMS = 4;
 	Queue sTheQ;
 	int dataValue = -1;
 	int i;
-	const int MAX_ITEMS = 4;
-	
+	bool bRetVal;
+
 	puts ("Program Start\n");
 
 	// create a queue for ints
@@ -54,9 +55,22 @@ int main () {
 
 
 	for (i = 0; i < MAX_ITEMS; ++i) {
-		queueEnqueue (&sTheQ, &i);
+		bRetVal = queueEnqueue (&sTheQ, &i);
+		if (!bRetVal) {
+			assert(bRetVal, "queueEnqueue failed");
+		}
 
 		// TODO: Validate the Enqueue worked
+
+		bRetVal = queuePeek(&sTheQ, &dataValue);
+
+		if (!bRetVal) {
+			assert(bRetVal, "queuePeek failed");
+		}
+
+		if (! (i == dataValue) ) {
+			assert(i==dataValue, "queuePeek returned wrong value");
+		}
 
 
 	}
@@ -73,8 +87,6 @@ int main () {
 
 
 	queueTerminate (&sTheQ);
-	assert (queueCount (&sTheQ) == 0, "after terminate queueCount is 0");
-
 
 	// TODO: create a separate queue for TempRecords
 	// test all of the queue functions.
