@@ -73,25 +73,29 @@ size_t queueCapacity(const QueuePtr psQueue)
 /**************************************************************************
 *									Inserting and retrieving values
 **************************************************************************/
-void queueEnqueue (QueuePtr psQueue, const void *pBuffer)
+bool queueEnqueue (QueuePtr psQueue, const void *pBuffer)
 {
-
+	return false;
 }
 
 // requires: psQueue is not full
 // results: Insert the element into the FIFO queue.
+// return true if successful, false otherwise.
 
-void *queueDequeue (QueuePtr psQueue, void *pBuffer)
+ bool queueDequeue (QueuePtr psQueue, void *pBuffer)
 {
-	return NULL;
+	return false;
 }
+
 // requires: psQueue is not empty
 // results: Remove the element from the front of a non-empty queue
+// return true if successful, false otherwise.
 
 /**************************************************************************
 *													Peek Operations
 **************************************************************************/
-void *queuePeek (QueuePtr psQueue, void *pBuffer)
+bool queuePeek (QueuePtr psQueue, void *pBuffer)
 {
-	return NULL;
+	return false;
 }
+// return true if successful, false otherwise.

@@ -71,18 +71,18 @@ extern size_t queueCapacity(const QueuePtr psQueue);
 /**************************************************************************
 *									Inserting and retrieving values
 **************************************************************************/
-extern void queueEnqueue (QueuePtr psQueue, const void *pBuffer);
+extern bool queueEnqueue (QueuePtr psQueue, const void *pBuffer);
 // requires: psQueue is not full
 // results: Insert the element into the FIFO queue.
 
-extern void *queueDequeue (QueuePtr psQueue, void *pBuffer);
+extern bool queueDequeue (QueuePtr psQueue, void *pBuffer);
 // requires: psQueue is not empty
 // results: Remove the element from the front of a non-empty queue
 
 /**************************************************************************
 *													Peek Operations
 **************************************************************************/
-extern void *queuePeek (QueuePtr psQueue, void *pBuffer);
+extern bool queuePeek (QueuePtr psQueue, void *pBuffer);
 // requires: psQueue is not empty
 // results: The value of the first element is returned through the
 //					argument list
