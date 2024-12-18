@@ -66,12 +66,12 @@ char *szFile, int line) {
 	fileAndLineLength = strlen(szFile) + (int) log(line);
 
 	if (bExpression) {
-		pStr = malloc(strlen(pszMsg) + fileAndLineLength + SPACES);
+		pStr = (char*) malloc(strlen(pszMsg) + fileAndLineLength + SPACES);
 		sprintf(pStr, "%s - %s:%d", pszMsg, szFile, line);
 		success (pStr);
 	}
 	else {
-		pStr = malloc(strlen(pszMsg) + fileAndLineLength + SPACES);
+		pStr = (char*) malloc(strlen(pszMsg) + fileAndLineLength + SPACES);
 		sprintf(pStr, "%s - %s:%d", pszMsg, szFile, line);
 		failure (pStr);
 	}
